@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="./js/jquery-1.7.2.min.js"></script>
+<body>
+<div>
+    <button id="btn_01">操作子页面的DOM</button>
+</div>
+<div id="contain">
+    hello world !
+</div>
+<iframe src="./iframe_main.html" id="ifrm"></iframe>
+<script>
+    //父级获取iframe子集中的内容
+    function getIframeDom(iframeId) {
+        return document.getElementById(iframeId).contentDocument || window.frames[iframeId].document;
+    }
+    //方法一：jquery版【推荐 兼容所有浏览器包括IE7/8/9/10】
+    //等待iframe加载完
+    document.getElementById("ifrm").onload = function (){
+        $('#btn_01').click(function(){
+            var frameBody = getIframeDom('ifrm');
+//          或者用下面的获取document也能兼容所有浏览器
+//          var frameBody = document.getElementById('ifrm').contentWindow.document;
+            $(frameBody).find('#ifrm_con').html('hello world , my son! ok 01');
+        });
+    }
+
+    //方法2：原生javascript版【兼容所有浏览器包括IE7/8/9/10】
+    //等待iframe加载完
+//    document.getElementById("ifrm").onload = function () {
+//        document.getElementById('btn_01').onclick = function(){
+//            var frameBody = getIframeDom('ifrm');
+//            frameBody.getElementById('ifrm_con').innerHTML = 'hello world , my son! ok 02';
+//        }
+//    }
+</script>
+</body>
+</html>
